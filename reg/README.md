@@ -1,5 +1,14 @@
 this project is main to compare about golang & java performance of regular expression
 
+#### backgroud
+调用次数： 10000次
+正则表达式：
+```
+findImgTag:<img[^<>]*\ssrc=(?:'|")?([^\s'"<>]+)(?:'|")?[^<>]*>
+findAllTag: <[^<>]*>
+findWhiteSpace:[\s　]*
+```
+
 #### result
 | engine | replace | findImgTag | findAllTag | findWhiteSpace |
 | ---- | ---- | ---- | ---- | ---- |
