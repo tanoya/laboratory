@@ -23,10 +23,44 @@ func log(method string, start, end int64) error {
 
 func main() {
 	replaceAllPerformance()
-	findPerformance()
+	findImgPerformance()
+	findAllTagPerformance()
+	findWhiteSpacePerformance()
 }
 
-func findPerformance() {
+// findWhiteSpacePerformance 查找空白字符
+func findWhiteSpacePerformance() {
+	data, err := ioutil.ReadFile("../data/online_data.txt")
+	if err != nil {
+		return
+	}
+
+	start := time.Now().UnixNano()
+	for i := 0; i < util.Threshold; i++ {
+		regexWhitespace.FindAllBytes([]byte(data))
+	}
+	end := time.Now().UnixNano()
+	fmt.Print(util.Format("rust", "findWhiteSpacePerformance", end-start))
+}
+
+// findAllTagPerformance 查找所有标签
+func findAllTagPerformance() {
+	data, err := ioutil.ReadFile("../data/online_data.txt")
+	if err != nil {
+		return
+	}
+
+	start := time.Now().UnixNano()
+	for i := 0; i < util.Threshold; i++ {
+		regexAllTag.FindAllBytes([]byte(data))
+
+	}
+	end := time.Now().UnixNano()
+	fmt.Print(util.Format("rust", "findAllTagPerformance", end-start))
+}
+
+// findImgPerformance 查找图片标签
+func findImgPerformance() {
 	data, err := ioutil.ReadFile("../data/online_data.txt")
 	if err != nil {
 		return
@@ -35,13 +69,12 @@ func findPerformance() {
 	start := time.Now().UnixNano()
 	for i := 0; i < util.Threshold; i++ {
 		regexBodyImgWithPTag.FindAllBytes([]byte(data))
-
 	}
 	end := time.Now().UnixNano()
-	fmt.Print(util.Format("rust", "findPerformance", end-start))
+	fmt.Print(util.Format("rust", "findImgPerformance", end-start))
 }
 
-// 线上数据[替换]的性能表现
+// replaceAllPerformance 线上数据[替换]的性能表现
 func replaceAllPerformance() {
 	data, err := ioutil.ReadFile("../data/online_data.txt")
 	if err != nil {

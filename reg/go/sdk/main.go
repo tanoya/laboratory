@@ -17,10 +17,43 @@ var (
 
 func main() {
 	replaceAllPerformance()
-	findPerformance()
+	findImgPerformance()
+	findAllTagPerformance()
+	findWhitespacePerformance()
 }
 
-func findPerformance() {
+// findWhitespacePerformance 查找空格
+func findWhitespacePerformance() {
+	data, err := ioutil.ReadFile("../data/online_data.txt")
+	if err != nil {
+		return
+	}
+
+	start := time.Now().UnixNano()
+	for i := 0; i < util.Threshold; i++ {
+		regexWhitespace.FindStringIndex(string(data))
+	}
+	end := time.Now().UnixNano()
+	fmt.Print(util.Format("sdk", "findWhitespace", end-start))
+}
+
+// findAllTagPerformance 查找所有标签
+func findAllTagPerformance() {
+	data, err := ioutil.ReadFile("../data/online_data.txt")
+	if err != nil {
+		return
+	}
+
+	start := time.Now().UnixNano()
+	for i := 0; i < util.Threshold; i++ {
+		regexAllTag.FindStringIndex(string(data))
+	}
+	end := time.Now().UnixNano()
+	fmt.Print(util.Format("sdk", "findAllTagPerformance", end-start))
+}
+
+// findImgPerformance 查找图片标签内容
+func findImgPerformance() {
 	data, err := ioutil.ReadFile("../data/online_data.txt")
 	if err != nil {
 		return
@@ -31,9 +64,10 @@ func findPerformance() {
 		regexBodyImgWithPTag.FindStringIndex(string(data))
 	}
 	end := time.Now().UnixNano()
-	fmt.Print(util.Format("rust", "findPerformance", end-start))
+	fmt.Print(util.Format("sdk", "findImgPerformance", end-start))
 }
 
+// replaceAllPerformance 替换内容
 func replaceAllPerformance() {
 	data, err := ioutil.ReadFile("../data/online_data.txt")
 	if err != nil {

@@ -20,23 +20,28 @@ public class Application {
     static int threshold = 10000;
     public static void main(String[] args) {
         run();
-        find();
+        findImgTag();
+        findAllTag();
+        findWhiteSpace();
     }
 
     static String format(String app, String method, long costTime) {
         return String.format(" %s %s cost %d millionSecond. \n", app, method, costTime);
     }
 
-    static void find() {
+    /**
+     * 查找所有图片标签
+     */
+    static void findImgTag() {
         Long start = System.currentTimeMillis();
         for(int i=1; i<threshold; i++){
-            find01();
+            findImgTag01();
         }
         Long end = System.currentTimeMillis();
-        System.out.print(format("java", "find", end-start));
+        System.out.print(format("java", "findImgTag", end-start));
     }
 
-    static void find01() {
+    static void findImgTag01() {
         String data = read("src/main/resources/data/online_data.txt");
         Matcher matcher = imgRegPattern.matcher(data);
         while( matcher.find() ){
@@ -44,6 +49,50 @@ public class Application {
         }
     }
 
+
+    /**
+     *  查找所有标签
+     */
+    static void findAllTag() {
+        Long start = System.currentTimeMillis();
+        for(int i=1; i<threshold; i++){
+            findAllTag01();
+        }
+        Long end = System.currentTimeMillis();
+        System.out.print(format("java", "findAllTag", end-start));
+    }
+
+    static void findAllTag01() {
+        String data = read("src/main/resources/data/online_data.txt");
+        Matcher matcher = tagRegPattern.matcher(data);
+        while( matcher.find() ){
+
+        }
+    }
+
+    /**
+     *  查找所有标签
+     */
+    static void findWhiteSpace() {
+        Long start = System.currentTimeMillis();
+        for(int i=1; i<threshold; i++){
+            findWhiteSpace01();
+        }
+        Long end = System.currentTimeMillis();
+        System.out.print(format("java", "findWhiteSpace", end-start));
+    }
+
+    static void findWhiteSpace01() {
+        String data = read("src/main/resources/data/online_data.txt");
+        Matcher matcher = whiteSpaceRegPattern.matcher(data);
+        while( matcher.find() ){
+
+        }
+    }
+
+    /**
+     * 根据规则替换
+     */
     static void run() {
         Long start = System.currentTimeMillis();
         for(int i=1; i<threshold; i++){
